@@ -1,0 +1,202 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="#" (click)="$event.preventDefault(); selectNavigation('Overview')">
+      <span class="brand-mark"><span></span><span></span><span></span><span></span></span>
+      <span>orbit<span class="brand-period">.</span></span>
+    </a>
+
+    <div class="workspace-switcher">
+      <div class="workspace-avatar">S</div>
+      <div class="workspace-copy">
+        <span class="eyebrow">WORKSPACE</span>
+        <strong>Studio North</strong>
+      </div>
+      <span class="chevron">⌄</span>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="section-label">MENU</p>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button
+          *ngFor="let item of navigation"
+          class="nav-item"
+          [class.active]="activeNav === item.label"
+          (click)="selectNavigation(item.label)">
+          <span class="nav-icon">{{ item.icon }}</span>
+          <span>{{ item.label }}</span>
+          <span *ngIf="item.badge" class="nav-badge">{{ item.badge }}</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="sidebar-section projects-nav">
+      <div class="section-heading">
+        <p class="section-label">YOUR PROJECTS</p>
+        <button class="tiny-button" aria-label="Add project" (click)="showToast('Project creation is coming soon')">+</button>
+      </div>
+      <button class="project-link selected" (click)="selectNavigation('Website redesign')">
+        <span class="project-dot violet-dot"></span> Website redesign
+      </button>
+      <button class="project-link" (click)="selectNavigation('Mobile app launch')">
+        <span class="project-dot blue-dot"></span> Mobile app launch
+      </button>
+      <button class="project-link" (click)="selectNavigation('Brand guidelines')">
+        <span class="project-dot orange-dot"></span> Brand guidelines
+      </button>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="upgrade-card">
+        <div class="upgrade-sparkle">✦</div>
+        <strong>Make room for<br>big ideas.</strong>
+        <p>Upgrade your workspace to unlock more.</p>
+        <button (click)="showToast('You are all set with the demo plan')">Explore plans <span>→</span></button>
+      </div>
+      <button class="profile-button" (click)="showToast('Profile settings are coming soon')">
+        <span class="avatar avatar-photo">AM</span>
+        <span class="profile-copy"><strong>Alex Morgan</strong><small>Free plan</small></span>
+        <span class="profile-menu">···</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong>{{ activeNav }}</strong></div>
+      <div class="topbar-actions">
+        <label class="search-box">
+          <span class="search-icon">⌕</span>
+          <input type="search" placeholder="Search anything..." aria-label="Search tasks" [value]="query" (input)="updateSearch($event)">
+          <kbd>⌘ K</kbd>
+        </label>
+        <div class="notification-wrap">
+          <button class="icon-button notification-button" aria-label="Notifications" (click)="toggleNotifications()">
+            ♧<span class="notification-dot"></span>
+          </button>
+          <div class="notification-popover" *ngIf="showNotifications">
+            <strong>You’re all caught up</strong>
+            <p>New updates will show up here.</p>
+          </div>
+        </div>
+        <button class="help-button" (click)="showToast('Need a hand? Your team is here to help')">?</button>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <section class="welcome-row">
+        <div>
+          <p class="date-label">MONDAY, MAY 20, 2024 <span class="sun-icon">☀</span></p>
+          <h1>Good morning, Alex <span class="wave">✦</span></h1>
+          <p class="welcome-subtitle">Here’s what’s happening with your projects today.</p>
+        </div>
+        <button class="primary-button" (click)="addTask()"><span>+</span> Create new task</button>
+      </section>
+
+      <section class="stats-grid" aria-label="Workspace statistics">
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-icon purple-icon">▤</span><span class="stat-change positive">↗ 12.5%</span></div>
+          <p class="stat-label">Total projects</p>
+          <div class="stat-value">12 <span>projects</span></div>
+          <div class="mini-chart purple-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-icon peach-icon">☷</span><span class="stat-change positive">↗ 8.2%</span></div>
+          <p class="stat-label">Tasks completed</p>
+          <div class="stat-value">48 <span>of 64</span></div>
+          <div class="progress-track"><span class="progress-fill peach-fill"></span></div>
+          <p class="stat-footnote">75% of your weekly goal</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-icon blue-icon">◷</span><span class="stat-change neutral">This week</span></div>
+          <p class="stat-label">Hours tracked</p>
+          <div class="stat-value">32.5 <span>hrs</span></div>
+          <div class="mini-chart blue-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+        <article class="stat-card team-stat">
+          <div class="stat-top"><span class="stat-icon green-icon">♧</span><span class="stat-change positive">+2 joined</span></div>
+          <p class="stat-label">Team members</p>
+          <div class="stat-value">8 <span>members</span></div>
+          <div class="avatar-stack">
+            <span class="avatar avatar-photo">AM</span><span class="avatar avatar-peach">JL</span><span class="avatar avatar-blue">SK</span><span class="avatar avatar-violet">DR</span><span class="avatar avatar-more">+4</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel projects-panel">
+          <div class="panel-heading">
+            <div><h2>Active projects</h2><p>Keep an eye on your team’s progress.</p></div>
+            <button class="text-button" (click)="selectNavigation('Projects')">View all <span>→</span></button>
+          </div>
+          <div class="project-table">
+            <div class="table-header"><span>PROJECT</span><span>PROGRESS</span><span>DUE DATE</span><span>TEAM</span></div>
+            <div class="project-row" *ngFor="let project of projects">
+              <div class="project-name">
+                <span class="project-icon" [ngClass]="project.color">{{ project.color === 'violet' ? '✳' : project.color === 'blue' ? '◈' : '✦' }}</span>
+                <span><strong>{{ project.name }}</strong><small>{{ project.tag }}</small></span>
+              </div>
+              <div class="project-progress">
+                <div class="progress-caption"><strong>{{ project.progress }}%</strong></div>
+                <div class="progress-track"><span [style.width.%]="project.progress" [ngClass]="project.color + '-fill'"></span></div>
+              </div>
+              <span class="due-date">{{ project.due }}</span>
+              <div class="avatar-stack table-avatars">
+                <span *ngFor="let person of project.people; let i = index" class="avatar" [ngClass]="['avatar-photo', 'avatar-peach', 'avatar-blue'][i % 3]">{{ person }}</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel activity-panel">
+          <div class="panel-heading">
+            <div><h2>Weekly activity</h2><p>Your productivity at a glance.</p></div>
+            <button class="period-button" (click)="showToast('Showing activity for this week')">This week <span>⌄</span></button>
+          </div>
+          <div class="activity-summary"><strong>24.8 <span>hrs</span></strong><span class="activity-change">↗ 6.4%</span><small>vs. last week</small></div>
+          <div class="chart" aria-label="Weekly activity bar chart">
+            <div class="chart-guides"><span>8h</span><span>6h</span><span>4h</span><span>2h</span><span>0h</span></div>
+            <div class="chart-bars">
+              <div class="bar-group"><i style="height: 48%"></i><i style="height: 28%"></i><span>Mon</span></div>
+              <div class="bar-group"><i style="height: 68%"></i><i style="height: 38%"></i><span>Tue</span></div>
+              <div class="bar-group"><i style="height: 54%"></i><i style="height: 44%"></i><span>Wed</span></div>
+              <div class="bar-group"><i style="height: 82%"></i><i style="height: 34%"></i><span>Thu</span></div>
+              <div class="bar-group current-day"><i style="height: 62%"></i><i style="height: 26%"></i><span>Fri</span></div>
+              <div class="bar-group"><i style="height: 36%"></i><i style="height: 18%"></i><span>Sat</span></div>
+              <div class="bar-group"><i style="height: 28%"></i><i style="height: 16%"></i><span>Sun</span></div>
+            </div>
+          </div>
+          <div class="chart-legend"><span><i class="legend-purple"></i>Focus time</span><span><i class="legend-lilac"></i>Meetings</span></div>
+        </article>
+      </section>
+
+      <section class="panel tasks-panel">
+        <div class="panel-heading task-heading">
+          <div><h2>My tasks <span class="task-count">{{ filteredTasks.length }}</span></h2><p>You have {{ remainingTaskCount }} tasks left to complete.</p></div>
+          <div class="task-controls">
+            <div class="filter-tabs" role="group" aria-label="Filter tasks">
+              <button *ngFor="let filter of ['All tasks', 'In progress', 'Completed']" [class.active]="activeFilter === filter" (click)="setFilter(filter)">{{ filter }}</button>
+            </div>
+            <button class="more-button" aria-label="More task options" (click)="showToast('You’re viewing your latest tasks')">···</button>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-row" *ngFor="let task of filteredTasks">
+            <button class="task-check" [class.checked]="task.completed" [attr.aria-label]="task.completed ? 'Mark task incomplete' : 'Mark task complete'" (click)="toggleTask(task)">{{ task.completed ? '✓' : '' }}</button>
+            <span class="task-title" [class.completed-title]="task.completed">{{ task.title }}</span>
+            <span class="task-project"><i [ngClass]="task.color"></i>{{ task.project }}</span>
+            <span class="task-due" [class.due-today]="task.due === 'Today'">{{ task.due }}</span>
+            <span class="status-pill" [ngClass]="task.status.toLowerCase().replace(' ', '-')">{{ task.status }}</span>
+            <span class="avatar task-avatar" [ngClass]="'avatar-' + task.color">{{ task.initials }}</span>
+            <button class="row-more" aria-label="Task options" (click)="showToast(task.title)">···</button>
+          </div>
+          <div class="empty-state" *ngIf="filteredTasks.length === 0">No tasks match your search. Try another keyword.</div>
+        </div>
+        <button class="view-tasks-button" (click)="selectNavigation('My tasks')">View all tasks <span>→</span></button>
+      </section>
+
+      <footer class="page-footer"><span>Made for teams that make things happen.</span><span>Need a little help? <button (click)="showToast('Help center is coming soon')">Visit our help center</button></span></footer>
+    </div>
+  </main>
+
+  <div class="toast" *ngIf="toastMessage" role="status">{{ toastMessage }}</div>
+</div>
